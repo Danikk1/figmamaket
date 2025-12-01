@@ -26,38 +26,128 @@ class MainMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Макеты из Figma")),
-      body: ListView(
-        children: [
-          ListTile(
-            title: const Text("Простой макет 1"),
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => const Simple1()),
-            ),
+      backgroundColor: const Color(0xFFF7F8FA),
+
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        title: const Text(
+          "Макеты из Figma",
+          style: TextStyle(
+            color: Color(0xFF09101D),
+            fontWeight: FontWeight.bold,
           ),
-          ListTile(
-            title: const Text("Простой макет 2"),
-            onTap: () => Navigator.push(
+        ),
+      ),
+
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            _menuCard(
               context,
-              MaterialPageRoute(builder: (_) => const Simple2()),
+              title: "Простой макет 1",
+              icon: Icons.phone_android,
+              color: Colors.blueAccent,
+              page: const Simple1(),
             ),
-          ),
-          ListTile(
-            title: const Text("Сложный макет 1"),
-            onTap: () => Navigator.push(
+
+            const SizedBox(height: 20),
+
+            _menuCard(
               context,
-              MaterialPageRoute(builder: (_) => const Complex1()),
+              title: "Простой макет 2",
+              icon: Icons.widgets,
+              color: Colors.purple,
+              page: const Simple2(),
             ),
-          ),
-          ListTile(
-            title: const Text("Сложный макет 2"),
-            onTap: () => Navigator.push(
+
+            const SizedBox(height: 20),
+
+            _menuCard(
               context,
-              MaterialPageRoute(builder: (_) => const Complex2()),
+              title: "Сложный макет 1",
+              icon: Icons.auto_graph,
+              color: Colors.orange,
+              page: const Complex1(),
             ),
-          ),
-        ],
+
+            const SizedBox(height: 20),
+
+            _menuCard(
+              context,
+              title: "Сложный макет 2",
+              icon: Icons.menu_book,
+              color: Colors.green,
+              page: const Complex2(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // -------------------------------------------------------
+  // BEAUTIFUL MENU CARD
+  // -------------------------------------------------------
+
+  Widget _menuCard(
+    BuildContext context, {
+    required String title,
+    required IconData icon,
+    required Color color,
+    required Widget page,
+  }) {
+    return InkWell(
+      borderRadius: BorderRadius.circular(20),
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => page),
+      ),
+      child: Container(
+        padding: const EdgeInsets.all(22),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.06),
+              blurRadius: 12,
+              offset: const Offset(0, 6),
+            )
+          ],
+        ),
+        child: Row(
+          children: [
+            // Icon block
+            Container(
+              width: 60,
+              height: 60,
+              decoration: BoxDecoration(
+                color: color.withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Icon(icon, size: 32, color: color),
+            ),
+
+            const SizedBox(width: 20),
+
+            // Title
+            Expanded(
+              child: Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 18,
+                  color: Color(0xFF09101D),
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+
+            const Icon(Icons.arrow_forward_ios, size: 18, color: Colors.grey),
+          ],
+        ),
       ),
     );
   }
